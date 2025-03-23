@@ -229,3 +229,212 @@
 
     </body>
 </html>
+
+//add.jsp
+
+<%@page import="java.sql.DriverManager"%>
+<%@page import="org.json.simple.JSONObject"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="org.json.simple.JSONArray"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%  
+
+JSONArray list = new JSONArray();
+
+String studname = request.getParameter("stname");
+String course = request.getParameter("course");
+String fee = request.getParameter("fee");
+
+Connection con;
+PreparedStatement pst;
+ResultSet rs;
+
+
+JSONObject obj = new JSONObject();
+
+Class.forName("com.mysql.jdbc.Driver");
+con = DriverManager.getConnection("jdbc:mysql://localhost/jspstudent","root","");
+pst = con.prepareStatement("insert into records (stname,course,fee)values(?,?,?)");
+pst.setString(1, studname);
+pst.setString(2, course);
+pst.setString(3, fee);
+pst.executeUpdate();
+obj.put("name", "success");
+list.add(obj);
+out.println(list.toJSONString());
+out.flush();
+
+%>
+
+//student.jsp
+
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="org.json.simple.JSONObject"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="org.json.simple.JSONArray"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%  
+JSONArray list = new JSONArray();
+Connection con;
+PreparedStatement pst;
+ResultSet rs;
+
+Class.forName("com.mysql.jdbc.Driver");
+con = DriverManager.getConnection("jdbc:mysql://localhost/jspstudent","root","");
+
+String query = "select * from records";
+
+Statement stmt = con.createStatement();
+
+rs = stmt.executeQuery(query);
+
+
+while(rs.next())
+{
+    JSONObject obj = new JSONObject();
+    String id = rs.getString("id");
+    String name = rs.getString("stname");
+    String course = rs.getString("course");
+    String fee = rs.getString("fee");
+    
+    obj.put("name", name);
+    obj.put("course", course);
+    obj.put("fee", fee);
+    obj.put("id", id);
+    list.add(obj);
+}
+
+out.print(list.toJSONString());
+out.flush();
+
+%>
+//edit.jsp
+<%@page import="org.json.simple.JSONObject"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="org.json.simple.JSONArray"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+JSONArray list = new JSONArray();
+Connection con;
+PreparedStatement pst;
+ResultSet rs;
+
+Class.forName("com.mysql.jdbc.Driver");
+con = DriverManager.getConnection("jdbc:mysql://localhost/jspstudent","root","");
+
+String id = request.getParameter("id");
+
+pst = con.prepareStatement("select id,stname,course,fee from records where id = ?");
+
+pst.setString(1, id);
+rs = pst.executeQuery();
+
+if(rs.next()==true)
+{
+    String id1 = rs.getString(1);
+    String stname = rs.getString(2);
+    String scourse = rs.getString(3);
+    String sfee = rs.getString(4);
+     JSONObject obj = new JSONObject();
+     
+     obj.put("id",id1);
+     obj.put("stname",stname);
+     obj.put("scourse",scourse);
+     obj.put("sfee",sfee);
+     list.add(obj);
+     
+    
+}
+
+out.print(list.toJSONString());
+out.flush();
+
+
+
+
+%>
+
+//update
+
+<%@page import="java.sql.DriverManager"%>
+<%@page import="org.json.simple.JSONObject"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="org.json.simple.JSONArray"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    
+JSONArray list = new JSONArray();
+
+
+String stid = request.getParameter("studentid");
+String studname = request.getParameter("stname");
+String course = request.getParameter("course");
+String fee = request.getParameter("fee");
+
+Connection con;
+PreparedStatement pst;
+ResultSet rs;
+
+
+JSONObject obj = new JSONObject();
+
+Class.forName("com.mysql.jdbc.Driver");
+con = DriverManager.getConnection("jdbc:mysql://localhost/jspstudent","root","");
+pst = con.prepareStatement("update records set stname = ?, course= ? , fee= ? where id = ?");
+pst.setString(1, studname);
+pst.setString(2, course);
+pst.setString(3, fee);
+pst.setString(4, stid);
+pst.executeUpdate();
+obj.put("name", "success");
+list.add(obj);
+out.println(list.toJSONString());
+out.flush();
+
+
+
+
+%>
+
+//delete
+
+<%@page import="java.sql.DriverManager"%>
+<%@page import="org.json.simple.JSONObject"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="org.json.simple.JSONArray"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+JSONArray list = new JSONArray();
+String stid = request.getParameter("id");
+Connection con;
+PreparedStatement pst;
+ResultSet rs;
+JSONObject obj = new JSONObject();
+Class.forName("com.mysql.jdbc.Driver");
+con = DriverManager.getConnection("jdbc:mysql://localhost/jspstudent","root","");
+pst = con.prepareStatement("delete from records where id = ?");
+pst.setString(1, stid);
+pst.executeUpdate();
+obj.put("name", "success");
+list.add(obj);
+out.println(list.toJSONString());
+out.flush();
+%>
+
