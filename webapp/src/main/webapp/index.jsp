@@ -238,7 +238,7 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="org.json.simple.JSONArray"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+//<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%  
 
@@ -278,7 +278,7 @@ out.flush();
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="org.json.simple.JSONArray"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+//<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%  
 JSONArray list = new JSONArray();
@@ -322,7 +322,7 @@ out.flush();
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="org.json.simple.JSONArray"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+//<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
 JSONArray list = new JSONArray();
@@ -373,7 +373,7 @@ out.flush();
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="org.json.simple.JSONArray"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+//<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
     
@@ -418,7 +418,7 @@ out.flush();
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="org.json.simple.JSONArray"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+//<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
 JSONArray list = new JSONArray();
