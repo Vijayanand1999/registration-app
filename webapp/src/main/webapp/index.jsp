@@ -3,7 +3,7 @@
     <h1>New user Register for DevOps Learning at ELYSIUM ACADEMYY Coimbatore</h1>
     <p>Please fill in this form to create an account.</p>
     <hr>
-     //https://github.com/tushar-2223/Hotel-Management-System.git
+     
     <label for="Name"><b>Enter Name</b></label>
     <input type="text" placeholder="Enter Full Name" name="Name" id="Name" required>
     <br>
