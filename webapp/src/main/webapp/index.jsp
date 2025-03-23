@@ -238,8 +238,6 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="org.json.simple.JSONArray"%>
-//<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <%  
 
 JSONArray list = new JSONArray();
@@ -272,14 +270,6 @@ out.flush();
 //student.jsp
 
 <%@page import="java.sql.Statement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="org.json.simple.JSONObject"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="org.json.simple.JSONArray"%>
-//<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <%  
 JSONArray list = new JSONArray();
 Connection con;
@@ -367,14 +357,6 @@ out.flush();
 
 //update
 
-<%@page import="java.sql.DriverManager"%>
-<%@page import="org.json.simple.JSONObject"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="org.json.simple.JSONArray"%>
-//<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <%
     
 JSONArray list = new JSONArray();
@@ -412,13 +394,6 @@ out.flush();
 
 //delete
 
-<%@page import="java.sql.DriverManager"%>
-<%@page import="org.json.simple.JSONObject"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="org.json.simple.JSONArray"%>
-//<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
 JSONArray list = new JSONArray();
