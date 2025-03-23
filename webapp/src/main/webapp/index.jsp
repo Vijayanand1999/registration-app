@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Student Management System</title>
+    <title>Student Management System ELYSIUM ACADEMY </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
@@ -57,6 +57,9 @@
                             <th>Delete</th>
                         </tr>
                     </thead>
+                    <tbody id="student-table-body">
+                        <!-- Dynamic Data Rows Will Be Added Here -->
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -94,43 +97,45 @@
                     url: 'index.jsp',
                     dataType: 'JSON',
                     data: data,
-                    success: function (data) {
-                        getAllStudents();
-                        resetForm();
-                        alert(isNew ? "Record Added" : "Record Updated");
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            getAllStudents();
+                            resetForm();
+                            alert(isNew ? "Record Added" : "Record Updated");
+                        } else {
+                            alert("Error! Something went wrong.");
+                        }
+                    },
+                    error: function () {
+                        alert("Error! Unable to connect to the server.");
                     }
                 });
             }
         }
 
         function getAllStudents() {
-            $('#tbl-student').DataTable().destroy();
             $.ajax({
                 url: 'index.jsp',
                 type: 'GET',
                 dataType: 'JSON',
                 success: function (data) {
-                    $('#tbl-student').DataTable({
-                        data: data,
-                        columns: [
-                            { "data": "name" },
-                            { "data": "course" },
-                            { "data": "fee" },
-                            {
-                                "data": "id",
-                                "render": function (data) {
-                                    return '<button class="btn btn-success" onclick="editStudent(' + data + ')">Edit</button>';
-                                }
-                            },
-                            {
-                                "data": "id",
-                                "render": function (data) {
-                                    return '<button class="btn btn-danger" onclick="deleteStudent(' + data + ')">Delete</button>';
-                                }
-                            }
-                        ],
-                        scrollX: true
+                    var tableBody = $('#student-table-body');
+                    tableBody.empty(); // Clear existing table rows
+
+                    $.each(data, function (index, student) {
+                        tableBody.append(
+                            `<tr>
+                                <td>${student.name}</td>
+                                <td>${student.course}</td>
+                                <td>${student.fee}</td>
+                                <td><button class="btn btn-success" onclick="editStudent(${student.id})">Edit</button></td>
+                                <td><button class="btn btn-danger" onclick="deleteStudent(${student.id})">Delete</button></td>
+                            </tr>`
+                        );
                     });
+
+                    // Initialize DataTable for the updated table
+                    $('#tbl-student').DataTable();
                 }
             });
         }
@@ -181,6 +186,7 @@
                 var fee = request.getParameter("fee");
                 var studentId = request.getParameter("studentid");
                 var deleteId = request.getParameter("deleteId");
+
                 if (studentId) {
                     // Update student
                     updateStudent(studentId, studentname, course, fee);
@@ -209,7 +215,7 @@
                 stmt.setString(2, course);
                 stmt.setString(3, fee);
                 stmt.executeUpdate();
-                jsonArray.push({ "name": "success" });
+                jsonArray.push({ "status": "success" });
                 response.setContentType("application/json");
                 response.getWriter().write(jsonArray.toJSONString());
             } catch (e) {
@@ -237,7 +243,7 @@
                 stmt.setString(3, fee);
                 stmt.setString(4, studentId);
                 stmt.executeUpdate();
-                jsonArray.push({ "name": "success" });
+                jsonArray.push({ "status": "success" });
                 response.setContentType("application/json");
                 response.getWriter().write(jsonArray.toJSONString());
             } catch (e) {
@@ -262,7 +268,7 @@
                 stmt = conn.prepareStatement("DELETE FROM records WHERE id = ?");
                 stmt.setString(1, deleteId);
                 stmt.executeUpdate();
-                jsonArray.push({ "name": "success" });
+                jsonArray.push({ "status": "success" });
                 response.setContentType("application/json");
                 response.getWriter().write(jsonArray.toJSONString());
             } catch (e) {
